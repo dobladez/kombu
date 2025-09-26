@@ -107,6 +107,14 @@ error_classes_t = namedtuple('error_classes_t', (
     'connection_errors', 'channel_errors',
 ))
 
+## ***************************************************
+## !!! Conagra extension here !!!
+## We define this configuration map, which is passed on to Redis' client contructor
+## along with the other kombu default params. This allows us to set in here
+## what we want (like, `credential_provider` for example) before initializing Celery
+CAG_EXTRA_CONNECTION_PARAMS = {}
+
+
 
 # This implementation may seem overly complex, but I assure you there is
 # a good reason for doing it this way.
@@ -1165,6 +1173,10 @@ class Channel(virtual.Channel):
             'retry_on_timeout': self.retry_on_timeout,
             'client_name': self.client_name,
         }
+
+        ## CAG extension here! See above
+        connparams.update(CAG_EXTRA_CONNECTION_PARAMS)
+
 
         conn_class = self.connection_class
 
