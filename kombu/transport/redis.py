@@ -1176,6 +1176,7 @@ class Channel(virtual.Channel):
 
         ## CAG extension here! See above
         connparams.update(CAG_EXTRA_CONNECTION_PARAMS)
+        warning('CAG - connparams: %r', connparams)
 
 
         conn_class = self.connection_class
